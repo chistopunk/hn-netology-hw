@@ -23,6 +23,32 @@ sudo nmap -sV -O -p- -n 192.168.139.128
 sudo nmap -sV --version-all -n -p 139,445,513,5432,6000,6667,8009,8180,53719 --script smb-os-discovery,irc-info 192.168.139.128
 ```
 
+Вывод уточняющего сканирования (файл task1_detail.txt):
+
+```
+PORT      STATE SERVICE     VERSION
+139/tcp   open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+445/tcp   open  netbios-ssn Samba smbd 3.0.20-Debian (workgroup: WORKGROUP)
+513/tcp   open  login?
+5432/tcp  open  postgresql  PostgreSQL DB 8.3.0 - 8.3.7
+6000/tcp  open  X11         (access denied)
+6667/tcp  open  irc         UnrealIRCd
+8009/tcp  open  ajp13       Apache Jserv (Protocol v1.3)
+8180/tcp  open  http        Apache Tomcat/Coyote JSP engine 1.1
+53719/tcp open  java-rmi    GNU Classpath grmiregistry
+MAC Address: 00:0C:29:4D:69:D7 (VMware)
+Service Info: Host: irc.Metasploitable.LAN
+
+Host script results:
+| smb-os-discovery: 
+|   OS: Unix (Samba 3.0.20-Debian)
+|   Computer name: metasploitable
+|   NetBIOS computer name: 
+|   Domain name: localdomain
+|   FQDN: metasploitable.localdomain
+|_  System time: 2026-11-22T08:23:38-05:00
+```
+
 Открыто 30 TCP-портов, остальные 65505 закрыты (ответ RST):
 
 | Порт | Служба | Версия |
@@ -89,7 +115,7 @@ sudo nmap -sV --version-all -n -p 139,445,513,5432,6000,6667,8009,8180,53719 --s
 
 Для TCP-сканов взяты порты 21, 22, 80 (по заданию 1 они открыты) и 9999 (закрыт), для UDP-скана — 53, 111, 137 (открыты) и 9999 (закрыт). Так в каждой записи видны ответы и открытого, и закрытого порта.
 
-Каждый скан записан в Wireshark отдельно, с фильтром захвата `host 192.168.139.128`. Файлы: `syn.pcapng`, `fin.pcapng`, `xmas.pcapng`, `udp.pcapng`.
+Каждый скан записан в Wireshark отдельно, с фильтром захвата `host 192.168.139.128`. Файлы записей лежат в папке [pcap](pcap/): [syn.pcapng](pcap/syn.pcapng), [fin.pcapng](pcap/fin.pcapng), [xmas.pcapng](pcap/xmas.pcapng), [udp.pcapng](pcap/udp.pcapng).
 
 ```
 sudo nmap -sS -n -Pn --reason -p 21,22,80,9999 192.168.139.128
